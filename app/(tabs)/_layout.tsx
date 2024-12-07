@@ -1,45 +1,102 @@
-import { Tabs } from 'expo-router';
-import React from 'react';
-import { Platform } from 'react-native';
+import { Ionicons } from "@expo/vector-icons";
+import { Tabs } from "expo-router";
+import { View, Text } from "react-native"
+import Search from "./search";
 
-import { HapticTab } from '@/components/HapticTab';
-import { IconSymbol } from '@/components/ui/IconSymbol';
-import TabBarBackground from '@/components/ui/TabBarBackground';
-import { Colors } from '@/constants/Colors';
-import { useColorScheme } from '@/hooks/useColorScheme';
-
-export default function TabLayout() {
-  const colorScheme = useColorScheme();
-
-  return (
-    <Tabs
-      screenOptions={{
-        tabBarActiveTintColor: Colors[colorScheme ?? 'light'].tint,
-        headerShown: false,
-        tabBarButton: HapticTab,
-        tabBarBackground: TabBarBackground,
-        tabBarStyle: Platform.select({
-          ios: {
-            // Use a transparent background on iOS to show the blur effect
-            position: 'absolute',
-          },
-          default: {},
-        }),
-      }}>
+export default function Layout(){
+  return(
+    <Tabs screenOptions={{
+      headerShown: false,
+      tabBarShowLabel: false,
+      tabBarStyle: {
+        position: "absolute",
+        bottom: 27,
+        left: 16,
+        right: 16,
+        height: 72,
+        elevation: 0,
+        backgroundColor: "white",
+        borderRadius: 16,
+        alignItems: "center",
+        justifyContent: "center",
+      }
+    }}>
       <Tabs.Screen
         name="index"
         options={{
-          title: 'Home',
-          tabBarIcon: ({ color }) => <IconSymbol size={28} name="house.fill" color={color} />,
-        }}
+          tabBarIcon: ({ focused }) => (
+            <View style={{
+              alignItems:"center",
+              paddingTop: 10
+            }}>
+              <Ionicons
+              name={focused ? "home" : "home-outline"}
+              color={focused ? "#04bbec" : "gray"}
+              size={24}
+              />
+              <Text style={{
+                color: focused? "#04bbec" :"gray",
+                fontSize: 10,
+                marginTop:4
+              }}>Inicio!</Text>
+            </View>
+          )
+        }
+        }
       />
-      <Tabs.Screen
-        name="explore"
+
+  <Tabs.Screen
+        name="add"
         options={{
-          title: 'Explore',
-          tabBarIcon: ({ color }) => <IconSymbol size={28} name="paperplane.fill" color={color} />,
-        }}
+          tabBarIcon: ({ focused }) => (
+            <View style={{
+              alignItems: "center",
+              justifyContent: "center",
+              height: 76,
+              width: 76,
+              borderRadius: 999,
+              backgroundColor: "#04bbec",
+              marginBottom: 26
+            }}>
+              <Ionicons
+              name="add"
+              color="white"
+              size={24}
+              />
+              <Text style={{
+                color: focused? "#04bbec" :"gray",
+                fontSize: 9,
+                marginTop:4
+              }}>Añadir!</Text>
+            </View>
+          )
+        }
+        }
+      />
+
+<Tabs.Screen
+        name="search"
+        options={{
+          tabBarIcon: ({ focused }) => (
+            <View style={{
+              alignItems:"center",
+              paddingTop: 10
+            }}>
+              <Ionicons
+              name="search"
+              color={focused ? "#04bbec" : "gray"}
+              size={24}
+              />
+              <Text style={{
+                color: focused? "#04bbec" :"gray",
+                fontSize: 9,
+                marginTop:4
+              }}>Buscar</Text>
+            </View>
+          )
+        }
+        }
       />
     </Tabs>
-  );
+  )
 }
